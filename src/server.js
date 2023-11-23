@@ -52,3 +52,18 @@ app.post('/items', (req, res, next) => {
       return res.status(400).send(err)
     })
 })
+
+app.put('/items/:id', (req, res, next) => {
+  const itemId = req.params.id;
+  const itemAtalualizado = {
+      nome: req.body.nome,
+      valor: req.body.valor
+  };
+
+  itemController.UpdateItem(itemId, itemAtalualizado)
+      .then((itemAtalualizado) => res.send(itemAtalualizado))
+      .catch((err) => {
+          console.log('Erro na atualização do item', JSON.stringify(err));
+          return res.status(400).send(err.message || err);
+      });
+});

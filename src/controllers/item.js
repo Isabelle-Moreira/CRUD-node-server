@@ -19,13 +19,23 @@ async function deleteItem(id_parame){
   await itemModel.destroy({where: {id:`${id_parame}`}})
 }
 
-async function UpdateItem(id_parame){
-   return await itemModel.update({where: {id:`${id_parame}`}})
+async function UpdateItem(id_param, itemAtalualizado){
+
+  const existeItem = await itemModel.findOne({ where: { id: `${id_param}` } });
+
+  if (!existeItem) {
+    throw new Error(`Item com ID ${id_param} nao foi encontrado`);
+  }
+
+  await itemModel.update(itemAtalualizado, { where: { id: `${id_param}` } });
+
+  const atualizado = await itemModel.findOne({ where: { id: `${id_param}` } });
+
+  return atualizado;
 }
 
 
 
 
 
-
-module.exports = {createItem, getItem, listItems, deleteItem}
+module.exports = {createItem, getItem, listItems, deleteItem,UpdateItem}
