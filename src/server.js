@@ -53,7 +53,7 @@ app.post('/items', (req, res, next) => {
     })
 })
 
-app.put('/items/:id', (req, res, next) => {
+app.patch('/items/:id', (req, res, next) => {
   const itemId = req.params.id;
   const itemAtalualizado = {
       nome: req.body.nome,
